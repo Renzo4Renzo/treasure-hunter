@@ -1,8 +1,10 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
+
+import { GOOGLE_API_KEY } from "@env";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { GOOGLE_API_KEY } from "@env";
+import * as Location from "expo-location";
 
 export default function App() {
   const [origin, setOrigin] = React.useState({
@@ -14,6 +16,24 @@ export default function App() {
     latitude: -12.111525,
     longitude: -77.030054,
   });
+
+  async function getLocationPermission() {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      alert("Location permission was denied");
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync();
+    const currentLocation = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setOrigin(currentLocation);
+  }
+
+  React.useEffect(() => {
+    getLocationPermission();
+  }, []);
 
   return (
     <View style={styles.container}>
