@@ -1,9 +1,9 @@
 import * as React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 
-import { GOOGLE_API_KEY } from "@env";
+// import { GOOGLE_API_KEY } from "@env";
 import MapView, { Marker, Polyline } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
+// import MapViewDirections from "react-native-maps-directions";
 import * as Location from "expo-location";
 
 function MapScreen(props) {
@@ -50,17 +50,11 @@ function MapScreen(props) {
           longitudeDelta: 0.04,
         }}
       >
-        <Marker
-          draggable
-          coordinate={origin}
-          onDragEnd={(direction) => setOrigin(direction.nativeEvent.coordinate)}
-        />
+        <Marker draggable coordinate={origin} onDragEnd={(direction) => setOrigin(direction.nativeEvent.coordinate)} />
         <Marker
           draggable
           coordinate={destination}
-          onDragEnd={(direction) =>
-            setDestination(direction.nativeEvent.coordinate)
-          }
+          onDragEnd={(direction) => setDestination(direction.nativeEvent.coordinate)}
         />
         {/* <MapViewDirections
           origin={origin}
@@ -69,12 +63,13 @@ function MapScreen(props) {
           strokeColor="#b196ff"
           strokeWidth={6}
         /> */}
-        <Polyline
-          coordinates={[origin, destination]}
-          strokeColor="#ffc0e9"
-          strokeWidth={6}
-        />
+        <Polyline coordinates={[origin, destination]} strokeColor="#ffc0e9" strokeWidth={6} />
       </MapView>
+      <View style={styles.buttonsContainer}>
+        <View style={styles.newLocationButton}></View>
+        <View style={styles.finishButton}></View>
+        <View style={styles.backButton}></View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -88,7 +83,25 @@ const styles = StyleSheet.create({
   },
   map: {
     width: "100%",
+    height: "90%",
+  },
+  buttonsContainer: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
     height: "100%",
+  },
+  newLocationButton: {
+    flex: 1,
+    backgroundColor: "red",
+  },
+  finishButton: {
+    flex: 1,
+    backgroundColor: "gold",
+  },
+  backButton: {
+    flex: 1,
+    backgroundColor: "blue",
   },
 });
 

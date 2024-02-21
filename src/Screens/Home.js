@@ -6,11 +6,8 @@ function Home({ props, navigation }) {
     <View>
       <Text>Welcome to the treasure hunting app!</Text>
       <Text>Are you a creator or treasure hunter?</Text>
-      <Button title="Creator" onPress={() => navigation.navigate("Details")} />
-      <Button
-        title="Hunter"
-        onPress={() => navigation.navigate("GameSelect")}
-      />
+      <Button title="Creator" onPress={() => navigation.navigate("MapScreen")} />
+      <Button title="Hunter" onPress={() => navigation.navigate("GameSelect")} />
     </View>
   );
 }
