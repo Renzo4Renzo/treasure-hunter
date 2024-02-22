@@ -24,26 +24,10 @@ export default function App() {
 function MyStack() {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ title: "Home Page" }}
-      />
-      <Stack.Screen
-        name="MapScreen"
-        component={MapScreen}
-        options={{ title: "Map View" }}
-      />
-      <Stack.Screen
-        name="Details"
-        component={Details}
-        options={{ title: "Details Screen" }}
-      />
-      <Stack.Screen
-        name="GameSelect"
-        component={GameSelect}
-        options={{ title: "Game Selection" }}
-      />
+      <Stack.Screen name="Home" component={Home} options={{ title: "Home Page" }} />
+      <Stack.Screen name="MapScreen" component={MapScreen} options={{ title: "Creating a Route" }} />
+      <Stack.Screen name="Details" component={Details} options={{ title: "Details Screen" }} />
+      <Stack.Screen name="GameSelect" component={GameSelect} options={{ title: "Game Selection" }} />
     </Stack.Navigator>
   );
 }
