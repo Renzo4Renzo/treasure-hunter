@@ -4,10 +4,9 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
 import Modal from "react-native-modal";
 
-let newRoute = [];
-
 function MapScreen(props) {
   const [initialRegion, setInitialRegion] = React.useState(null);
+  const [gameName, setGameName] = React.useState("");
   const [markers, setMarkers] = React.useState([]);
   const [promptVisible, setPromptVisible] = React.useState(false);
   const [promptTitle, setPromptTitle] = React.useState("");
@@ -93,14 +92,28 @@ function MapScreen(props) {
   ];
 
   const saveRoute = () => {
-    newRoute = markers.map((marker, index) => ({
-      ...marker,
-      isLastClue: index === markers.length - 1,
-    }));
+    if (markers.length < 2 || gameName.trim() === "") {
+      Alert.alert("Error", "Game name and at least 2 markers are required");
+      return;
+    }
+    const gameData = {
+      name: gameName.trim().toUpperCase(),
+      route: markers.map((marker, index) => ({
+        ...marker,
+        isLastClue: index === markers.length - 1,
+      })),
+    };
+    console.log("Game Data:", gameData);
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <TextInput
+        style={styles.gameNameInput}
+        placeholder="Enter your game name here"
+        value={gameName}
+        onChangeText={(text) => setGameName(text)}
+      />
       <MapView style={styles.map} initialRegion={initialRegion} onPress={addMarker}>
         {markers.map((marker) => (
           <Marker
@@ -146,6 +159,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  gameNameInput: {
+    width: "100%",
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 1,
+    padding: 10,
   },
   map: {
     flex: 1,
