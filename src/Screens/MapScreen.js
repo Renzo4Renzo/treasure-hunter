@@ -3,8 +3,12 @@ import { StyleSheet, SafeAreaView, View, Text, TextInput, Pressable, Alert } fro
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
 import Modal from "react-native-modal";
+import { useDispatch } from "react-redux";
+import { addGameData } from "../redux/gameDataReducer";
 
-function MapScreen(props) {
+function MapScreen({ navigation }) {
+  const dispatch = useDispatch();
+
   const [initialRegion, setInitialRegion] = React.useState(null);
   const [gameName, setGameName] = React.useState("");
   const [markers, setMarkers] = React.useState([]);
@@ -103,7 +107,8 @@ function MapScreen(props) {
         isLastClue: index === markers.length - 1,
       })),
     };
-    console.log("Game Data:", gameData);
+    dispatch(addGameData(gameData));
+    navigation.goBack();
   };
 
   return (
