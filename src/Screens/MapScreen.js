@@ -62,6 +62,8 @@ function MapScreen(props) {
       title: promptTitle,
       clue: promptClue,
     };
+    setPromptTitle("");
+    setPromptClue("");
 
     setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
     hidePrompt();
@@ -91,8 +93,10 @@ function MapScreen(props) {
   ];
 
   const saveRoute = () => {
-    newRoute = markers;
-    console.log(newRoute);
+    newRoute = markers.map((marker, index) => ({
+      ...marker,
+      isLastClue: index === markers.length - 1,
+    }));
   };
 
   return (
