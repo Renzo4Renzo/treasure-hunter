@@ -1,6 +1,11 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
+//Redux
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import gameDataReducer from "./src/redux/gameDataReducer";
+
 //navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -10,6 +15,12 @@ import MapScreen from "./src/Screens/MapScreen";
 import Home from "./src/Screens/Home";
 import Details from "./src/Screens/Details";
 import GameSelect from "./src/Screens/GameSelect";
+
+const store = configureStore({
+  reducer: {
+    gameData: gameDataReducer,
+  },
+});
 import DisplayClue from "./src/Screens/DisplayClue";
 import GameFinish from "./src/Screens/GameFinish";
 import ClueDisplayPage from "./src/Screens/ClueDisplayPage";
@@ -20,9 +31,11 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <LocationProvider>
-      <NavigationContainer>
-        <MyStack />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <MyStack />
+        </NavigationContainer>
+      </Provider>
     </LocationProvider>
   );
 }
@@ -38,7 +51,7 @@ function MyStack() {
       <Stack.Screen
         name="MapScreen"
         component={MapScreen}
-        options={{ title: "Map View" }}
+        options={{ title: "Creating a Route" }}
       />
       <Stack.Screen
         name="Details"

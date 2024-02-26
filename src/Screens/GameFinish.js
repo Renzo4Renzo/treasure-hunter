@@ -1,26 +1,25 @@
 import React, { useEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { useLocation } from "../Context/LocationContext";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Treasure from "../Animations/Treasure";
 
 function GameFinish(props) {
-  //animation stuff
+  const navigation = useNavigation();
+
+  // Animation stuff
   const playTreasureAnimation = () => {
     treasureAnimation.play();
-  };
-  const stopTreasureAnimation = () => {
-    treasureAnimation.reset();
   };
 
   useEffect(() => {
     // Play the animation when the component mounts
     playTreasureAnimation();
-    // Optionally, you can stop the animation when the component unmounts
-    return () => {
-      stopTreasureAnimation();
-    };
   }, []);
+
+  // Function to handle navigation back to "Home"
+  const handleNavigateHome = () => {
+    navigation.navigate("Home");
+  };
 
   return (
     <View style={styles.container}>
@@ -28,6 +27,12 @@ function GameFinish(props) {
         Congratulations! You found the treasure!
       </Text>
       <Treasure />
+      {/* Button to navigate back to "Home" */}
+      <TouchableOpacity onPress={handleNavigateHome}>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>Go Back Home</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -45,6 +50,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 20,
     color: "#333", // text color
+  },
+  button: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#AEFBBF",
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "black",
+    fontSize: 16,
   },
 });
 
