@@ -51,7 +51,7 @@ function MyStack() {
       <Stack.Screen
         name="MapScreen"
         component={MapScreen}
-        options={{ title: "Creating a Route" }}
+        options={{ title: "Creating a Route", headerShown: false }}
       />
       <Stack.Screen
         name="Details"

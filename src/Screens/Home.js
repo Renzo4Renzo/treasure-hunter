@@ -3,8 +3,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 
 function Home({ navigation }) {
-  const gameData = JSON.stringify(useSelector((state) => state.gameData));
-  console.log(gameData);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to the Treasure Hunting App!</Text>
@@ -21,7 +19,6 @@ function Home({ navigation }) {
       >
         <Text style={styles.buttonText}>Treasure Hunter</Text>
       </TouchableOpacity>
-      <Text> {`Game Data: ${gameData}`} </Text>
     </View>
   );
 }

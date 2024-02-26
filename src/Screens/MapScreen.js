@@ -1,5 +1,14 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, View, Text, TextInput, Pressable, Alert } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
 import Modal from "react-native-modal";
@@ -79,7 +88,11 @@ function MapScreen({ navigation }) {
 
   const updateMarker = (markerId, newCoordinate) => {
     setMarkers((prevMarkers) =>
-      prevMarkers.map((marker) => (marker.id === markerId ? { ...marker, coordinate: newCoordinate } : marker))
+      prevMarkers.map((marker) =>
+        marker.id === markerId
+          ? { ...marker, coordinate: newCoordinate }
+          : marker
+      )
     );
   };
 
@@ -91,7 +104,7 @@ function MapScreen({ navigation }) {
   const setSaveRouteStyle = ({ pressed }) => [
     styles.buttonsContainer,
     {
-      backgroundColor: pressed || markers.length < 2 ? "gray" : "gold",
+      backgroundColor: pressed || markers.length < 2 ? "gray" : "#3498db",
     },
   ];
 
@@ -119,7 +132,11 @@ function MapScreen({ navigation }) {
         value={gameName}
         onChangeText={(text) => setGameName(text)}
       />
-      <MapView style={styles.map} initialRegion={initialRegion} onPress={addMarker}>
+      <MapView
+        style={styles.map}
+        initialRegion={initialRegion}
+        onPress={addMarker}
+      >
         {markers.map((marker) => (
           <Marker
             key={marker.id}
@@ -131,21 +148,46 @@ function MapScreen({ navigation }) {
           />
         ))}
         {polylineCoordinates.length > 1 && (
-          <Polyline coordinates={polylineCoordinates} strokeColor="#ffc0e9" strokeWidth={6} />
+          <Polyline
+            coordinates={polylineCoordinates}
+            strokeColor="#ffc0e9"
+            strokeWidth={6}
+          />
         )}
       </MapView>
-      <Pressable onPress={saveRoute} style={setSaveRouteStyle} disabled={markers.length < 2}>
+      <Pressable
+        onPress={saveRoute}
+        style={setSaveRouteStyle}
+        disabled={markers.length < 2}
+      >
         <View>
           <Text>SAVE ROUTE</Text>
         </View>
       </Pressable>
 
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={() => navigation.navigate("Home")}
+      >
+        <Text>Go to Home</Text>
+      </TouchableOpacity>
+
       <Modal isVisible={promptVisible}>
         <View style={styles.promptContainer}>
           <Text style={styles.promptTitle}>Add checkpoint</Text>
-          <Text style={styles.promptText}>Enter title and clue for the new checkpoint:</Text>
-          <TextInput style={styles.promptInput} placeholder="Title" onChangeText={(text) => setPromptTitle(text)} />
-          <TextInput style={styles.promptInput} placeholder="Clue" onChangeText={(text) => setPromptClue(text)} />
+          <Text style={styles.promptText}>
+            Enter title and clue for the new checkpoint:
+          </Text>
+          <TextInput
+            style={styles.promptInput}
+            placeholder="Title"
+            onChangeText={(text) => setPromptTitle(text)}
+          />
+          <TextInput
+            style={styles.promptInput}
+            placeholder="Clue"
+            onChangeText={(text) => setPromptClue(text)}
+          />
           <Pressable style={styles.promptButton} onPress={handlePromptSubmit}>
             <Text>Submit</Text>
           </Pressable>
@@ -161,33 +203,47 @@ function MapScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F4F4F4",
     alignItems: "center",
     justifyContent: "center",
   },
   gameNameInput: {
-    width: "100%",
+    width: "90%",
     height: 50,
-    borderColor: "gray",
-    borderWidth: 1,
+    borderColor: "#3498db",
+    borderWidth: 2,
+    borderRadius: 10,
     padding: 10,
+    marginVertical: 10,
+    backgroundColor: "#fff",
   },
   map: {
     flex: 1,
-    width: "100%",
+    width: "90%",
+    borderRadius: 10,
+    overflow: "hidden",
+    marginVertical: 10,
   },
   buttonsContainer: {
-    width: "100%",
+    width: "90%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "gold",
+    backgroundColor: "#3498db",
+    borderRadius: 10,
+    marginVertical: 10,
   },
-  saveButton: {
-    backgroundColor: "gold",
+  homeButton: {
+    width: "90%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#AEFBBF",
+    borderRadius: 10,
+    marginVertical: 10,
   },
   promptContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,
   },
@@ -201,17 +257,26 @@ const styles = StyleSheet.create({
   },
   promptInput: {
     height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
+    borderColor: "#3498db",
+    borderWidth: 2,
+    borderRadius: 5,
     marginBottom: 10,
     paddingLeft: 10,
+    backgroundColor: "#fff",
   },
   promptButton: {
-    backgroundColor: "gold",
+    backgroundColor: "#3498db",
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
     marginBottom: 10,
+  },
+  customButton: {
+    backgroundColor: "#3498db",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginTop: 10,
   },
 });
 
